@@ -37,3 +37,18 @@ void ALetter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+
+void ALetter::SetLetter(char Letter) {
+	
+	if (!DynamicMaterial) {
+		return;
+	}
+
+	TCHAR UpperCaseChar = FChar::ToUpper(Letter);
+
+	// Create the FString with the dynamic character
+	FString GeneratedString = FString::Printf(TEXT("/Game/Images/%c.%c"), UpperCaseChar, UpperCaseChar);
+
+	UTexture2D* Texture = LoadObject<UTexture2D>(nullptr, *GeneratedString);
+	DynamicMaterial->SetTextureParameterValue(FName("Albedo"), Texture);
+}
